@@ -1,0 +1,29 @@
+# Secrets / local configuration
+.env
+*.env.local
+backend/.env
+
+# Backend build output & runtime data
+backend/target/
+backend/data/
+backend/logs/
+*.log
+
+# Frontend
+frontend/node_modules/
+frontend/build/
+frontend/coverage/
+frontend/.cache/
+
+# IDE / OS
+.idea/
+.vscode/
+*.iml
+.DS_Store
+Thumbs.db
+
+# Script runtime files
+scripts/*.pid
+
+# Database backups (contain real data)
+backups/

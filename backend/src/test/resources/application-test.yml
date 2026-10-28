@@ -1,0 +1,28 @@
+# Automated tests run against a dedicated MySQL schema that is DROPPED AND RECREATED at start-up
+# (see IntegrationTestConfig). It must end in "_test"; the tests refuse to clean any other schema.
+# DB_HOST / DB_USERNAME / DB_PASSWORD come from the environment or backend/.env as usual.
+spring:
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${TEST_DB_NAME:hostel_management_test}?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf8&serverTimezone=UTC&connectionTimeZone=UTC&forceConnectionTimeZoneToSession=true
+  flyway:
+    clean-disabled: false
+
+app:
+  security:
+    jwt-secret: ${JWT_SECRET:test-only-jwt-secret-at-least-thirty-two-chars}
+  upload-dir: ./target/test-uploads
+  seed:
+    enabled: false
+  scheduling:
+    enabled: false
+  super-admin:
+    email: ""
+    password: ""
+  payment:
+    provider: mock
+    min-partial-amount: 100
+    link-expiry-days: 7
+
+logging:
+  level:
+    com.hostelmanagement: INFO

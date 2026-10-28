@@ -1,0 +1,127 @@
+# Base configuration. Secrets and machine-specific values come from environment
+# variables or from an untracked backend/.env file (see .env.example).
+spring:
+  application:
+    name: hostel-management
+  config:
+    import: optional:file:.env[.properties]
+  profiles:
+    active: ${SPRING_PROFILES_ACTIVE:}
+  datasource:
+    url: jdbc:mysql://${DB_HOST:localhost}:${DB_PORT:3306}/${DB_NAME:hostel_management_db}?createDatabaseIfNotExist=${app.db.create-database:false}&useUnicode=true&characterEncoding=utf8&serverTimezone=UTC&connectionTimeZone=UTC&forceConnectionTimeZoneToSession=true
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    hikari:
+      maximum-pool-size: 10
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        jdbc:
+          time_zone: UTC
+          batch_size: 50
+        order_inserts: true
+        default_batch_fetch_size: 50
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    baseline-on-migrate: false
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 6MB
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    time-zone: UTC
+
+server:
+  port: ${SERVER_PORT:8080}
+  error:
+    include-stacktrace: never
+    include-message: never
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: never
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs
+
+app:
+  # Business "today" is evaluated in this zone (payments due today, vacancy windows, etc.)
+  time-zone: ${APP_TIME_ZONE:Asia/Kolkata}
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:http://localhost:3000}
+  security:
+    jwt-secret: ${JWT_SECRET}
+    access-token-minutes: ${JWT_ACCESS_MINUTES:30}
+    refresh-token-days: ${JWT_REFRESH_DAYS:7}
+    refresh-cookie-secure: ${REFRESH_COOKIE_SECURE:false}
+    login-rate-limit-per-minute: ${LOGIN_RATE_LIMIT:10}
+    data-key: ${DATA_ENCRYPTION_KEY:}
+  super-admin:
+    # Bootstrap platform administrator (created only if no SUPER_ADMIN exists). Leave empty to skip.
+    email: ${SUPER_ADMIN_EMAIL:}
+    password: ${SUPER_ADMIN_PASSWORD:}
+  frontend-base-url: ${FRONTEND_BASE_URL:http://localhost:3000}
+  upload-dir: ${UPLOAD_DIR:./data/uploads}
+  scheduling:
+    enabled: ${SCHEDULING_ENABLED:true}
+  whatsapp:
+    # MOCK (default) records simulated messages only. META uses the WhatsApp Cloud API.
+    mode: ${WHATSAPP_MODE:MOCK}
+    api-version: ${WHATSAPP_API_VERSION:v21.0}
+    phone-number-id: ${WHATSAPP_PHONE_NUMBER_ID:}
+    access-token: ${WHATSAPP_ACCESS_TOKEN:}
+    app-secret: ${WHATSAPP_APP_SECRET:}
+    webhook-verify-token: ${WHATSAPP_WEBHOOK_VERIFY_TOKEN:}
+    default-country-code: ${WHATSAPP_DEFAULT_COUNTRY_CODE:91}
+    max-attempts: 3
+  reminders:
+    # Master switch for the daily job. Each owner also has to enable "automatic reminders" in Settings.
+    enabled: ${RENT_REMINDERS_ENABLED:true}
+    cron: ${RENT_REMINDERS_CRON:0 0 9 * * *}
+    overdue-interval-days: 3
+    overdue-max: 4
+  mail:
+    # LOG = write e-mails to the log (development only, never in prod); SMTP = send through the server below.
+    mode: ${MAIL_MODE:LOG}
+    host: ${MAIL_HOST:}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME:}
+    password: ${MAIL_PASSWORD:}
+    from: ${MAIL_FROM:}
+    from-name: ${MAIL_FROM_NAME:HostelHub}
+    # NONE | STARTTLS | SSL
+    tls: ${MAIL_TLS:STARTTLS}
+    auth: ${MAIL_AUTH:true}
+    timeout-ms: ${MAIL_TIMEOUT_MS:10000}
+  notifications:
+    # Every notification (read or unread) is deleted once it is this many days old, measured from creation.
+    retention-days: ${NOTIFICATION_RETENTION_DAYS:30}
+    # Rows removed per DELETE statement, so the daily cleanup never holds long locks
+    delete-batch-size: 5000
+    # Daily at 03:30 in app.time-zone (Spring cron: second minute hour day month weekday)
+    cleanup-cron: ${NOTIFICATION_CLEANUP_CRON:0 30 3 * * *}
+  payment:
+    # mock = simulated checkout (development only); razorpay = Razorpay (Test Mode keys in development).
+    # To add a provider: write an adapter + a case in PaymentGatewayConfig (see docs/PAYMENTS.md).
+    provider: ${PAYMENT_PROVIDER:mock}
+    currency: INR
+    min-partial-amount: ${PAYMENT_MIN_PARTIAL_AMOUNT:100}
+    link-expiry-days: ${PAYMENT_LINK_EXPIRY_DAYS:7}
+    razorpay:
+      key-id: ${RAZORPAY_KEY_ID:}
+      key-secret: ${RAZORPAY_KEY_SECRET:}
+      webhook-secret: ${RAZORPAY_WEBHOOK_SECRET:}

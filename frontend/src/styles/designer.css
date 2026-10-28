@@ -1,0 +1,30 @@
+/* Floor plan variants + Floors & rooms designer */
+.hh-plan-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 6px; background: #2F3239; padding: 6px; }
+.hh-plan-grid .hh-room-cell + .hh-room-cell { border-left: 0; }
+.hh-plan-grid .hh-room-tile { border-radius: 4px; }
+.hh-plan-void { background: #E6D6C4; }
+[data-theme='dark'] .hh-plan-void { background: #3A332C; }
+
+.hh-design-floor { display: flex; align-items: center; gap: .25rem; border: 1px solid var(--hh-border); border-radius: 12px; margin-bottom: .5rem;
+  background: var(--hh-card-alt); padding: .25rem .35rem .25rem .25rem; }
+.hh-design-floor.active { border-color: var(--hh-primary); box-shadow: 0 0 0 3px rgba(255, 90, 10, .12); background: var(--hh-primary-light); }
+.hh-design-floor-main { flex: 1; min-width: 0; border: 0; background: none; text-align: left; padding: .45rem .55rem; color: var(--hh-text); }
+.hh-design-floor-main strong { display: block; font-weight: 600; font-size: .9rem; }
+.hh-design-floor-main small { color: var(--hh-muted); font-size: .74rem; }
+
+.hh-design-lane { border: 2px dashed var(--hh-border); border-radius: 14px; padding: .6rem; min-height: 120px; background: var(--hh-card-alt); transition: border-color .15s, background .15s; }
+.hh-design-lane.droppable { border-color: #FFC7A6; background: var(--hh-primary-light); }
+.hh-design-lane-title { font-size: .72rem; font-weight: 600; text-transform: uppercase; letter-spacing: .05em; color: var(--hh-muted); margin-bottom: .5rem; }
+.hh-design-empty { text-align: center; color: #9CA3AF; font-size: .85rem; padding: 1.2rem .5rem; }
+.hh-design-chip { display: flex; align-items: center; gap: .55rem; background: var(--hh-card); border: 1px solid var(--hh-border); border-radius: 12px;
+  padding: .55rem .6rem; margin-bottom: .45rem; box-shadow: 0 1px 2px rgba(0, 0, 0, .04); }
+.hh-design-chip[draggable='true'] { cursor: grab; }
+.hh-design-chip.dragging { opacity: .45; }
+.hh-design-grip { color: #9CA3AF; font-size: 1.1rem; }
+.hh-design-chip-actions { display: flex; gap: 2px; flex-wrap: wrap; justify-content: flex-end; }
+.hh-seg button:disabled { opacity: .6; }
+@media (max-width: 575.98px) {
+  .hh-design-chip { flex-wrap: wrap; }
+  .hh-design-chip-actions { width: 100%; justify-content: flex-start; border-top: 1px solid var(--hh-row); padding-top: .35rem; }
+  .hh-design-chip-actions .hh-row-action { padding: 8px 10px; }
+}

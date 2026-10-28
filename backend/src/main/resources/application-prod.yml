@@ -1,0 +1,23 @@
+# Production profile: no demo data, no API documentation, secure cookies expected behind HTTPS.
+# Required environment (the application refuses to start without the first three): DB_USERNAME, DB_PASSWORD, JWT_SECRET.
+app:
+  seed:
+    enabled: false
+  security:
+    refresh-cookie-secure: ${REFRESH_COOKIE_SECURE:true}
+
+springdoc:
+  api-docs:
+    enabled: false
+  swagger-ui:
+    enabled: false
+
+server:
+  # Set FORWARD_HEADERS_STRATEGY=framework ONLY when a trusted reverse proxy terminates TLS and overwrites
+  # X-Forwarded-* headers; otherwise clients could spoof their IP and dodge rate limits.
+  forward-headers-strategy: ${FORWARD_HEADERS_STRATEGY:none}
+
+logging:
+  level:
+    root: INFO
+    com.hostelmanagement: INFO

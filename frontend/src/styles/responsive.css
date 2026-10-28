@@ -1,0 +1,89 @@
+/* =====================================================================
+   Shared controls + responsive rules applied to every page.
+   Loaded last so it can refine earlier styles.
+   ===================================================================== */
+
+/* react-icons close button (replaces Bootstrap's CSS .btn-close) */
+.hh-close { width: 34px; height: 34px; border: 0; border-radius: 10px; background: transparent; color: var(--hh-muted); display: inline-grid;
+  place-items: center; font-size: 1rem; flex-shrink: 0; transition: background .15s, color .15s; }
+.hh-close:hover { background: var(--hh-primary-light); color: var(--hh-text); }
+.hh-close.light { color: #fff; }
+.hh-close.light:hover { background: rgba(255, 255, 255, .18); color: #fff; }
+.hh-close.sm { width: 26px; height: 26px; font-size: .8rem; }
+.hh-breadcrumb .sep { font-size: 9px; color: #9CA3AF; margin-right: 6px; vertical-align: 0; }
+
+/* Never let the page scroll sideways; wide content scrolls inside its own container */
+html { max-width: 100%; overflow-x: hidden; }
+body { max-width: 100%; overflow-x: clip; }
+.hh-main, .hh-content { min-width: 0; }
+.hh-content img, .hh-content svg:not(.hh-icon), .hh-content canvas { max-width: 100%; }
+.recharts-responsive-container { max-width: 100%; }
+.hh-card, .hh-table-card { min-width: 0; max-width: 100%; }
+.row > * { min-width: 0; }
+.nav-tabs, .nav-pills { flex-wrap: nowrap; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; }
+.nav-tabs::-webkit-scrollbar, .nav-pills::-webkit-scrollbar { display: none; }
+.nav-tabs .nav-link, .nav-pills .nav-link { white-space: nowrap; }
+.table-responsive { -webkit-overflow-scrolling: touch; }
+.hh-kv dd { overflow-wrap: anywhere; min-width: 0; }
+.modal-dialog { max-width: min(var(--bs-modal-width, 500px), calc(100vw - 1rem)); }
+.modal-lg { --bs-modal-width: 800px; }
+.modal-xl { --bs-modal-width: 1140px; }
+
+/* Tablet */
+@media (max-width: 991.98px) {
+  .hh-page-header { gap: .75rem; }
+  .hh-page-actions { width: 100%; }
+  .hh-page-actions > .btn, .hh-page-actions > a.btn { flex: 1 1 auto; }
+  .hh-table-toolbar > * { flex: 1 1 180px; }
+  .hh-table-toolbar > .ms-auto { flex: 0 0 auto; }
+  .hh-table-toolbar .form-select.w-auto { width: 100% !important; }
+  .hh-bp-head > div:last-child { width: 100%; }
+  .hh-bp-head .hh-seg { flex: 1 1 auto; }
+  .hh-bp-head .hh-seg button { flex: 1; justify-content: center; }
+  .hh-search { max-width: none; }
+}
+
+/* Phone */
+@media (max-width: 575.98px) {
+  .hh-content { padding-left: .75rem; padding-right: .75rem; }
+  .hh-card { padding: .9rem; }
+  .hh-card > .hh-pagination { margin: .75rem -.9rem -.9rem; }
+  .hh-card-header { gap: .5rem; }
+  .hh-card-header > .d-flex, .hh-card-header > .btn-group { width: 100%; }
+  .hh-page-title { font-size: 1.15rem; }
+  .hh-title-icon { width: 32px; height: 32px; font-size: .95rem; }
+  .hh-topbar { gap: .4rem; }
+  .hh-topbar .hh-search input::placeholder { font-size: .85rem; }
+  .hh-stats { gap: .55rem; }
+  .hh-stat-occ .hh-stat-value { font-size: 1.15rem; }
+  .hh-seg { width: 100%; }
+  .hh-seg button { flex: 1; justify-content: center; padding: .5rem .5rem; font-size: .8rem; }
+  .hh-qa { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .hh-qa a { font-size: .68rem; padding: .55rem .1rem; }
+  .hh-qa-ic { width: 38px; height: 38px; }
+  .hh-pay-row { flex-wrap: wrap; }
+  .hh-pay-row > a { flex-basis: calc(100% - 50px); }
+  .hh-legend { gap: .3rem .8rem; font-size: .72rem; }
+  .hh-donut-wrap { flex-direction: column; align-items: stretch; }
+  .hh-donut-wrap > div:first-child { align-self: center; }
+  .hh-drawer-body { padding: .9rem; }
+  .hh-drawer-footer > .btn, .hh-drawer-footer > a.btn { flex: 1 1 auto; }
+  .modal-footer > .btn { flex: 1 1 auto; }
+  .hh-filters > * { flex: 1 1 100%; }
+  .hh-pagination-buttons .hh-page-btn { width: 30px; height: 30px; }
+  .hh-pagination-info { justify-content: center; width: 100%; }
+  .btn-group { flex-wrap: wrap; }
+  .hh-hostel-card { flex-basis: 78vw; }
+  .hh-plan-badge strong { font-size: 1rem; }
+}
+
+/* Laptop widths: the dashboard right column is narrow — stack the donut and use 2-column quick actions */
+.hh-qa { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.hh-qa a { min-width: 0; overflow-wrap: anywhere; }
+.hh-donut-legend div > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+@media (min-width: 1200px) and (max-width: 1599.98px) {
+  .hh-donut-wrap { flex-direction: column; align-items: stretch; }
+  .hh-donut-wrap > div:first-child { align-self: center; }
+  .hh-qa { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .hh-alert-time { display: none; }
+}

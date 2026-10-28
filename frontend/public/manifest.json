@@ -1,0 +1,11 @@
+{
+  "short_name": "HostelHub",
+  "name": "HostelHub - Multi-Hostel Management",
+  "icons": [
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#FF5A0A",
+  "background_color": "#FFF9F4"
+}
